@@ -1,1 +1,2 @@
-# Me.github.io
+# RivalWu.github.io
+thanks gemini ai
