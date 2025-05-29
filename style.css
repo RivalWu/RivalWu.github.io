@@ -1,0 +1,325 @@
+/* Mengimpor font 'Poppins' dari Google Fonts. Ini opsional, tapi bagus untuk tampilan. */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* Style untuk seluruh body halaman */
+body {
+    background-color: #121212; /* Warna latar belakang gelap */
+    color: #fff; /* Warna teks putih */
+    font-family: 'Poppins', sans-serif; /* Jenis font yang digunakan */
+    margin: 0; /* Menghapus margin default dari browser */
+    display: flex; /* Menggunakan flexbox untuk mengatur layout */
+    justify-content: center; /* Menengahkan konten secara horizontal */
+    align-items: center; /* Menengahkan konten secara vertikal */
+    min-height: 100vh; /* Tinggi minimal sama dengan tinggi layar */
+    padding: 20px; /* Memberi jarak di sekeliling konten di dalam body */
+    box-sizing: border-box; /* Membuat padding tidak menambah ukuran total elemen */
+    overflow-x: hidden; /* Mencegah munculnya scroll bar horizontal */
+}
+
+/* Style untuk video latar belakang */
+.background-video {
+    position: fixed; /* Membuat posisi video tetap di layar, tidak ikut ter-scroll */
+    right: 0;
+    bottom: 0;
+    min-width: 100vw; /* Lebar minimal sama dengan lebar viewport (layar) */
+    min-height: 100vh; /* Tinggi minimal sama dengan tinggi viewport (layar) */
+    z-index: -1; /* Meletakkan video di lapisan paling belakang */
+    object-fit: cover; /* Memastikan video menutupi seluruh area tanpa distorsi */
+    filter: brightness(40%); /* Mengurangi kecerahan video menjadi 40% */
+}
+
+/* Kontainer utama yang membungkus semua konten */
+.container {
+    max-width: 600px; /* Lebar maksimal kontainer adalah 600px */
+    width: 100%; /* Lebar kontainer akan 100% jika layar lebih kecil dari 600px */
+    text-align: center; /* Membuat semua teks di dalamnya menjadi rata tengah */
+    display: flex; /* Menggunakan flexbox */
+    flex-direction: column; /* Mengatur item di dalamnya tersusun ke bawah (vertikal) */
+    gap: 20px; /* Memberi jarak 20px antar item di dalam kontainer */
+    z-index: 1; /* Posisinya di atas video latar belakang */
+}
+
+/* Style untuk bagian profil */
+.profile {
+    padding-top: 30px;
+    padding-bottom: 0;
+    transition: transform 0.3s ease; /* Memberi efek transisi saat ukuran berubah */
+}
+
+/* Efek saat kursor mouse berada di atas (hover) profil, kartu link, dan ikon sosial */
+.profile:hover,
+.link-card:hover,
+.socials a:hover {
+    transform: scale(1.03); /* Sedikit membesar saat di-hover */
+}
+
+/* Style untuk gambar profil */
+.profile img {
+    width: 100px; /* Lebar gambar */
+    height: 100px; /* Tinggi gambar */
+    border-radius: 50%; /* Membuat gambar menjadi bulat sempurna */
+    border: 0 solid #fff; /* Menghapus border */
+    object-fit: cover; /* Memastikan gambar pas di dalam lingkaran tanpa gepeng */
+}
+
+/* Style untuk nama profil (tag H1) */
+.profile h1 {
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-size: 2em; /* Ukuran font 2 kali dari ukuran font normal */
+    /* Menambahkan efek bayangan teks agar terlihat bersinar (glowing) */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* Style untuk paragraf deskripsi di bawah nama profil */
+.profile p {
+    margin: 0; /* Menghapus margin atas dan bawah */
+    color: #ccc; /* Warna teks abu-abu terang */
+    font-size: 0.9em; /* Ukuran font sedikit lebih kecil */
+    text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.7); /* Bayangan teks agar mudah dibaca di atas video */
+}
+
+/* Grid untuk menampung kartu-kartu link */
+.links {
+    display: grid; /* Menggunakan layout grid */
+    grid-template-columns: repeat(2, 1fr); /* Membuat 2 kolom dengan lebar yang sama */
+    gap: 15px; /* Jarak antar kartu di dalam grid */
+}
+
+/* Bagian atas dari kartu link (yang berisi ikon dan teks) */
+.card-top {
+    display: flex; /* Menggunakan flexbox */
+    align-items: center; /* Menyelaraskan ikon dan teks secara vertikal di tengah */
+}
+
+/* Style untuk setiap kartu tautan */
+.link-card {
+    background: rgba(35, 35, 35, 0.5); /* Latar belakang semi-transparan (efek kaca) */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Border tipis berwarna putih transparan */
+    border-radius: 20px; /* Membuat sudut kartu menjadi tumpul */
+    backdrop-filter: blur(10px); /* Memberi efek blur pada background di belakang kartu */
+    -webkit-backdrop-filter: blur(10px); /* Dukungan untuk browser Safari */
+    transition: transform 0.3s ease; /* Efek transisi saat di-hover */
+    text-decoration: none; /* Menghapus garis bawah pada link */
+    color: #fff; /* Warna teks menjadi putih */
+    padding: 15px 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Ikon di dalam kartu link */
+.link-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Membuat ikon bulat */
+    margin-right: 15px; /* Memberi jarak di sebelah kanan ikon */
+    object-fit: cover;
+}
+
+/* Blok teks di dalam kartu link */
+.link-text {
+    text-align: left; /* Teks menjadi rata kiri */
+    flex-grow: 1; /* Membuat elemen ini mengisi sisa ruang yang ada */
+}
+
+/* Judul tebal di kartu link */
+.link-text strong {
+    display: block; /* Menjadikannya elemen blok (agar memenuhi satu baris) */
+    font-size: 1em;
+}
+
+/* Deskripsi kecil di kartu link */
+.link-text span {
+    font-size: 0.8em;
+    color: #bbb; /* Warna abu-abu */
+}
+
+/* Bagian untuk ikon sosial media */
+.socials {
+    display: flex;
+    justify-content: center; /* Menengahkan ikon-ikon secara horizontal */
+    gap: 20px; /* Jarak antar ikon */
+}
+
+/* Style untuk setiap link ikon sosial */
+.socials a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(35, 35, 35, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.5em;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+/* Style untuk ikon di dalam link (tag <i> dari Font Awesome) */
+.socials a i {
+    transition: text-shadow 0.3s ease; /* Transisi untuk efek glowing */
+    /* Efek glowing untuk ikon */
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Efek saat link sosial di-hover */
+.socials a:hover {
+    transform: scale(1.1); /* Sedikit membesar */
+    background: rgba(50, 50, 50, 0.7); /* Latar belakang sedikit lebih terang */
+}
+
+/* Menambahkan efek glow pada ikon saat di-hover */
+.socials a:hover i {
+    text-shadow: 0 0 16px rgba(255, 255, 255, 1);
+}
+
+/* Aturan untuk layar yang lebih kecil dari 600px (Responsive Design) */
+@media (max-width: 600px) {
+    /* Mengubah grid link menjadi 1 kolom saja agar tidak sempit */
+    .links {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Style untuk kursor ketik yang berkedip */
+.cursor {
+    display: inline-block;
+    background-color: #ccc;
+    width: 8px;
+    height: 1em;
+    animation: blink 1s step-end infinite; /* Menggunakan animasi 'blink' */
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+/* Definisi animasi 'blink' */
+@keyframes blink {
+    from, to {
+        background-color: transparent; /* Awal dan akhir animasi, kursor transparan */
+    }
+    50% {
+        background-color: #ccc; /* Di tengah animasi, kursor muncul */
+    }
+}
+
+/* Style untuk kotak kontrol volume */
+#volume-control {
+    position: fixed;
+    top: 25px;
+    left: 25px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background: rgba(35, 35, 35, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+/* Ikon di dalam kontrol volume */
+#volume-control i {
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    width: 25px;
+}
+
+/* Slider volume, awalnya tersembunyi */
+#volume-slider {
+    width: 0;
+    opacity: 0;
+    margin-left: 0;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    -webkit-appearance: none; /* Menghilangkan style default browser */
+    appearance: none;
+    background: transparent;
+}
+
+/* Saat kotak kontrol volume di-hover, slider akan muncul */
+#volume-control:hover #volume-slider {
+    width: 80px; /* Lebar slider saat muncul */
+    opacity: 1; /* Slider menjadi terlihat */
+    margin-left: 10px; /* Jarak dari ikon speaker */
+}
+
+/* Style untuk jalur (track) slider di Chrome/Safari */
+#volume-slider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    background: #555;
+    border-radius: 2px;
+}
+
+/* Style untuk gagang (thumb) slider di Chrome/Safari */
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    margin-top: -4px; /* Menyesuaikan posisi vertikal gagang */
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+/* Splash screen yang menutupi seluruh halaman */
+#splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    z-index: 200; /* Paling atas di antara semua elemen */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+/* Class 'hidden' untuk menyembunyikan splash screen dengan efek fade out */
+#splash-screen.hidden {
+    opacity: 0; /* Membuatnya transparan */
+    visibility: hidden; /* Menyembunyikannya dari pandangan dan interaksi */
+}
+
+/* Tombol 'Enter' di tengah splash screen */
+#enter-button {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 12px 25px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    animation: pulse 2s infinite; /* Menggunakan animasi 'pulse' */
+}
+
+/* Definisi animasi 'pulse' untuk tombol */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+    70% {
+        transform: scale(1.05); /* Sedikit membesar */
+        /* Bayangan menyebar dan menghilang untuk menciptakan efek denyut */
+        box-shadow: 0 0 10px 20px rgba(255, 255, 255, 0); 
+    }
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}

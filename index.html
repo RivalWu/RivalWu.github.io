@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𓄧</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="splash-screen">
+        <button id="enter-button">{ click me }</button>
+    </div>
+
+    <div id="volume-control">
+        <i class="fa-solid fa-volume-high"></i>
+        <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="1">
+    </div>
+
+    <audio id="background-music" loop>
+        <source src="background.mp3" type="audio/mpeg">
+        Browser kamu tidak support elemen audio.
+    </audio>
+    
+    <video autoplay loop muted playsinline class="background-video">
+        <source src="background.mp4" type="video/mp4">
+        Browser kamu tidak support elemen video.
+    </video>
+
+    <div class="container">
+
+        <header class="profile">
+            <img src="https://cdn.discordapp.com/attachments/1329135059520983124/1377424448398823424/IMG_20250423_235450_246.webp?ex=6838e9fb&is=6837987b&hm=7e8c88daf5487fc9f481ca7143ceb17095b41c2d792300e3583b18d60e490cc2&" alt="Foto Profil">
+            <h1>val❤︎</h1>
+            <p>
+                𓆩♡𓆪 
+                <span id="typing-text"></span>
+                <span class="cursor"></span>
+            </p>
+        </header>
+
+        <main class="links">
+
+            <a href="#" class="link-card">
+                <div class="card-top">
+                    <img src="https://cdn.discordapp.com/attachments/1329135059520983124/1377439815343018014/jesko.jpg?ex=6838f84b&is=6837a6cb&hm=d7e85ca4c7b0b023d88149817fd081f04d544f00511412e0dbc20665b2527354&" alt="Ikon Mobil Koenigsegg Jesko" class="link-icon">
+                    <div class="link-text">
+                        <strong>Koenigsegg Jesko</strong>
+                        <span>The price of the 2021 Koenigsegg Jesko starts at $3,000,000. Koenigsegg's Jesko is offered in two flavors: a base model built for road use and a track-only variant. Base models come with all the treats hypercar buyers expect.</span>
+                    </div>
+                </div>
+            </a>
+
+            <a href="#" class="link-card">
+                <div class="card-top">
+                    <img src="https://cdn.discordapp.com/attachments/1329135059520983124/1377439815573831680/revuelto.jpg?ex=6838f84b&is=6837a6cb&hm=652c4967ae79b738597bd6c2eda0d9c6f5462eb4cba732ad8c6ae6f410fc7433&" alt="Ikon Mobil Lamborghini Revuelto" class="link-icon">
+                    <div class="link-text">
+                        <strong>Lamborghini Revuelto</strong>
+                        <span>Lamborghini Revuelto starts at $608,358. based on options and enhancements, including paint, carbon fiber features, and other customizations, which can add hundreds of thousands of dollars to the final cost.</span>
+                    </div>
+                </div>
+            </a>
+        </main>
+
+        <footer class="socials">
+            <a href="https://www.instagram.com/ripaldawg/" aria-label="Tautan Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="https://www.facebook.com/rivalriz" aria-label="Tautan Facebook"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://discordapp.com/users/399186469832622080" aria-label="Tautan Discord"><i class="fa-brands fa-discord"></i></a>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
