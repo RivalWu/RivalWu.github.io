@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
-
 /* warna dasar */
 :root{
   --bg-dark:#0a0a0a;
@@ -25,7 +23,7 @@ body{
   min-height:100vh;
     display:flex;
   justify-content:center;
-      align-items:center;
+      align-items:flex-start;
   padding:20px;
   overflow-x:hidden;
 }
@@ -182,6 +180,7 @@ position:fixed;top:0;left:0;
   display:flex;flex-direction:column;
     gap:30px;
   z-index:1;padding:20px 0;
+    margin:auto 0;
 }
 
 
