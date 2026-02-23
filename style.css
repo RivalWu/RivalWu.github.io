@@ -1,325 +1,434 @@
-/* Mengimpor font 'Poppins' dari Google Fonts. Ini opsional, tapi bagus untuk tampilan. */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
 
-/* Style untuk seluruh body halaman */
-body {
-    background-color: #121212; /* Warna latar belakang gelap */
-    color: #fff; /* Warna teks putih */
-    font-family: 'Poppins', sans-serif; /* Jenis font yang digunakan */
-    margin: 0; /* Menghapus margin default dari browser */
-    display: flex; /* Menggunakan flexbox untuk mengatur layout */
-    justify-content: center; /* Menengahkan konten secara horizontal */
-    align-items: center; /* Menengahkan konten secara vertikal */
-    min-height: 100vh; /* Tinggi minimal sama dengan tinggi layar */
-    padding: 20px; /* Memberi jarak di sekeliling konten di dalam body */
-    box-sizing: border-box; /* Membuat padding tidak menambah ukuran total elemen */
-    overflow-x: hidden; /* Mencegah munculnya scroll bar horizontal */
+/* warna dasar */
+:root{
+  --bg-dark:#0a0a0a;
+    --accent:#ffffff;
+  --accent-dim:#aaaaaa;
+    --accent-glow:rgba(255,255,255,0.4);
+--text-primary:#e0e0e0;
+  --text-muted:#666;
+  --card-bg:rgba(20,20,20,0.7);
+    --card-border:rgba(255,255,255,0.1);
+  --font-heading:'Orbitron',sans-serif;
+  --font-body:'Share Tech Mono',monospace;
 }
 
-/* Style untuk video latar belakang */
-.background-video {
-    position: fixed; /* Membuat posisi video tetap di layar, tidak ikut ter-scroll */
-    right: 0;
-    bottom: 0;
-    min-width: 100vw; /* Lebar minimal sama dengan lebar viewport (layar) */
-    min-height: 100vh; /* Tinggi minimal sama dengan tinggi viewport (layar) */
-    z-index: -1; /* Meletakkan video di lapisan paling belakang */
-    object-fit: cover; /* Memastikan video menutupi seluruh area tanpa distorsi */
-    filter: brightness(40%); /* Mengurangi kecerahan video menjadi 40% */
+/* reset biasa */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+
+body{
+  background-color:var(--bg-dark);
+    color:var(--text-primary);
+  font-family:var(--font-body);
+  min-height:100vh;
+    display:flex;
+  justify-content:center;
+      align-items:center;
+  padding:20px;
+  overflow-x:hidden;
 }
 
-/* Kontainer utama yang membungkus semua konten */
-.container {
-    max-width: 600px; /* Lebar maksimal kontainer adalah 600px */
-    width: 100%; /* Lebar kontainer akan 100% jika layar lebih kecil dari 600px */
-    text-align: center; /* Membuat semua teks di dalamnya menjadi rata tengah */
-    display: flex; /* Menggunakan flexbox */
-    flex-direction: column; /* Mengatur item di dalamnya tersusun ke bawah (vertikal) */
-    gap: 20px; /* Memberi jarak 20px antar item di dalam kontainer */
-    z-index: 1; /* Posisinya di atas video latar belakang */
+/* efek scanline biar keliatan CRT jadul */
+.scanlines{
+    position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+    z-index:50;
+  pointer-events:none;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);
 }
 
-/* Style untuk bagian profil */
-.profile {
-    padding-top: 30px;
-    padding-bottom: 0;
-    transition: transform 0.3s ease; /* Memberi efek transisi saat ukuran berubah */
+/* video background */
+.background-video{
+  position:fixed;
+    top:0;left:0;
+  width:100vw;height:100vh;
+  z-index:-2;
+  object-fit:cover;
+    filter:brightness(30%) saturate(0.6);
 }
 
-/* Efek saat kursor mouse berada di atas (hover) profil, kartu link, dan ikon sosial */
-.profile:hover,
-.link-card:hover,
-.socials a:hover {
-    transform: scale(1.03); /* Sedikit membesar saat di-hover */
+/* grid tipis dibelakang */
+.grid-overlay{
+    position:fixed;top:0;left:0;
+    width:100%;height:100%;
+  z-index:-1;
+  pointer-events:none;
+  background:
+    linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+    background-size:60px 60px;
 }
 
-/* Style untuk gambar profil */
-.profile img {
-    width: 100px; /* Lebar gambar */
-    height: 100px; /* Tinggi gambar */
-    border-radius: 50%; /* Membuat gambar menjadi bulat sempurna */
-    border: 0 solid #fff; /* Menghapus border */
-    object-fit: cover; /* Memastikan gambar pas di dalam lingkaran tanpa gepeng */
+
+/* ---------- SPLASH SCREEN ---------- */
+
+#splash-screen{
+position:fixed;top:0;left:0;
+    width:100vw;height:100vh;
+  background:var(--bg-dark);
+  z-index:200;
+    display:flex;justify-content:center;align-items:center;
+  flex-direction:column;
+  opacity:1;visibility:visible;
+    transition:opacity 0.6s ease,visibility 0.6s ease;
+}
+#splash-screen.hidden{opacity:0;visibility:hidden}
+
+.splash-content{text-align:center}
+
+.splash-glitch{
+  font-family:var(--font-heading);
+    font-size:clamp(3rem,10vw,6rem);
+  font-weight:900;
+    color:#fff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.6),0 0 40px rgba(255,255,255,0.3),0 0 80px rgba(255,255,255,0.1);
+    position:relative;
+  animation:glitch-skew 4s infinite linear alternate-reverse;
+  letter-spacing:0.1em;
+}
+.splash-glitch::before,.splash-glitch::after{
+  content:attr(data-text);
+    position:absolute;top:0;left:0;
+  width:100%;height:100%;
+}
+.splash-glitch::before{
+    color:#aaa;
+  animation:glitch-1 2s infinite linear alternate-reverse;
+  clip-path:polygon(0 0,100% 0,100% 35%,0 35%);
+}
+.splash-glitch::after{
+  color:#ccc;
+    animation:glitch-2 3s infinite linear alternate-reverse;
+    clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);
 }
 
-/* Style untuk nama profil (tag H1) */
-.profile h1 {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-size: 2em; /* Ukuran font 2 kali dari ukuran font normal */
-    /* Menambahkan efek bayangan teks agar terlihat bersinar (glowing) */
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.6);
+#enter-button{
+    background:transparent;
+  border:1px solid #fff;color:#fff;
+  padding:14px 40px;
+    font-family:var(--font-body);
+  font-size:0.9rem;
+  cursor:pointer;
+    letter-spacing:0.15em;
+  text-transform:uppercase;
+  margin-top:30px;
+    position:relative;overflow:hidden;
+  transition:all 0.3s ease;
+  animation:pulse-neon 2s infinite;
+}
+#enter-button:hover{
+  background:rgba(255,255,255,0.08);
+    box-shadow:0 0 15px rgba(255,255,255,0.2),inset 0 0 15px rgba(255,255,255,0.05);
+  transform:scale(1.05);
 }
 
-/* Style untuk paragraf deskripsi di bawah nama profil */
-.profile p {
-    margin: 0; /* Menghapus margin atas dan bawah */
-    color: #ccc; /* Warna teks abu-abu terang */
-    font-size: 0.9em; /* Ukuran font sedikit lebih kecil */
-    text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.7); /* Bayangan teks agar mudah dibaca di atas video */
+.btn-bracket{color:#888;font-weight:bold}
+
+.splash-sub{
+    margin-top:20px;
+  color:var(--text-muted);
+    font-size:0.75rem;
+  letter-spacing:0.2em;
+  animation:blink-text 1.5s infinite;
 }
 
-/* Grid untuk menampung kartu-kartu link */
-.links {
-    display: grid; /* Menggunakan layout grid */
-    grid-template-columns: repeat(2, 1fr); /* Membuat 2 kolom dengan lebar yang sama */
-    gap: 15px; /* Jarak antar kartu di dalam grid */
+
+/* ---------- VOLUME ---------- */
+
+#volume-control{
+  position:fixed;top:20px;left:20px;
+    z-index:100;
+  display:flex;align-items:center;
+  padding:8px 12px;
+    background:var(--card-bg);
+  border:1px solid var(--card-border);
+  border-radius:25px;
+    backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  transition:all 0.3s ease;
+}
+#volume-control i{
+    color:#fff;cursor:pointer;
+  font-size:16px;width:20px;
+  text-shadow:0 0 8px rgba(255,255,255,0.3);
 }
 
-/* Bagian atas dari kartu link (yang berisi ikon dan teks) */
-.card-top {
-    display: flex; /* Menggunakan flexbox */
-    align-items: center; /* Menyelaraskan ikon dan teks secara vertikal di tengah */
+#volume-slider{
+    width:0;opacity:0;margin-left:0;
+  transition:all 0.3s ease;
+    cursor:pointer;
+  -webkit-appearance:none;appearance:none;
+  background:transparent;height:4px;
+}
+#volume-control:hover #volume-slider{
+  width:80px;opacity:1;margin-left:10px;
 }
 
-/* Style untuk setiap kartu tautan */
-.link-card {
-    background: rgba(35, 35, 35, 0.5); /* Latar belakang semi-transparan (efek kaca) */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Border tipis berwarna putih transparan */
-    border-radius: 20px; /* Membuat sudut kartu menjadi tumpul */
-    backdrop-filter: blur(10px); /* Memberi efek blur pada background di belakang kartu */
-    -webkit-backdrop-filter: blur(10px); /* Dukungan untuk browser Safari */
-    transition: transform 0.3s ease; /* Efek transisi saat di-hover */
-    text-decoration: none; /* Menghapus garis bawah pada link */
-    color: #fff; /* Warna teks menjadi putih */
-    padding: 15px 20px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+/* slider track */
+#volume-slider::-webkit-slider-runnable-track{width:100%;height:3px;background:linear-gradient(90deg,#888,#fff);border-radius:2px}
+#volume-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;margin-top:-5px;width:13px;height:13px;background:#fff;border-radius:50%;box-shadow:0 0 6px rgba(255,255,255,0.4)}
+#volume-slider::-moz-range-track{width:100%;height:3px;background:linear-gradient(90deg,#888,#fff);border-radius:2px}
+#volume-slider::-moz-range-thumb{width:13px;height:13px;background:#fff;border-radius:50%;border:none;box-shadow:0 0 6px rgba(255,255,255,0.4)}
+
+
+/* ---------- CONTAINER ---------- */
+
+.container{
+  max-width:500px;width:100%;
+    text-align:center;
+  display:flex;flex-direction:column;
+    gap:30px;
+  z-index:1;padding:20px 0;
 }
 
-/* Ikon di dalam kartu link */
-.link-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%; /* Membuat ikon bulat */
-    margin-right: 15px; /* Memberi jarak di sebelah kanan ikon */
-    object-fit: cover;
+
+/* ---------- PROFIL ---------- */
+
+.profile{padding:20px 0}
+
+.profile-img-wrapper{
+    position:relative;
+  width:120px;height:120px;
+  margin:0 auto 15px;
+}
+.profile-img-wrapper img{
+    width:120px;height:120px;
+  border-radius:50%;
+    object-fit:cover;
+  border:2px solid rgba(255,255,255,0.6);
+  box-shadow:0 0 15px rgba(255,255,255,0.15),0 0 30px rgba(255,255,255,0.05);
+    position:relative;z-index:2;
+  transition:transform 0.4s ease,box-shadow 0.4s ease;
+}
+.profile-img-wrapper:hover img{
+  transform:scale(1.05);
+    box-shadow:0 0 25px rgba(255,255,255,0.3),0 0 50px rgba(255,255,255,0.1);
 }
 
-/* Blok teks di dalam kartu link */
-.link-text {
-    text-align: left; /* Teks menjadi rata kiri */
-    flex-grow: 1; /* Membuat elemen ini mengisi sisa ruang yang ada */
+/* ring yg muter */
+.profile-ring{
+  position:absolute;top:-5px;left:-5px;
+    width:130px;height:130px;
+  border-radius:50%;
+  border:1px solid transparent;
+    border-top-color:rgba(255,255,255,0.6);
+  border-right-color:rgba(255,255,255,0.2);
+    animation:spin-ring 4s linear infinite;
+  z-index:1;
 }
 
-/* Judul tebal di kartu link */
-.link-text strong {
-    display: block; /* Menjadikannya elemen blok (agar memenuhi satu baris) */
-    font-size: 1em;
+/* glitch nama */
+.glitch{
+    font-family:var(--font-heading);
+  font-size:2.5rem;font-weight:900;color:#fff;
+  position:relative;
+    text-shadow:0 0 10px rgba(255,255,255,0.3),0 0 30px rgba(255,255,255,0.1);
+  letter-spacing:0.08em;
+}
+.glitch::before,.glitch::after{
+  content:attr(data-text);
+    position:absolute;top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;
+}
+.glitch::before{color:#aaa;animation:glitch-1 3s infinite linear alternate-reverse;clip-path:polygon(0 0,100% 0,100% 40%,0 40%);opacity:0.8}
+.glitch::after{color:#ccc;animation:glitch-2 2s infinite linear alternate-reverse;clip-path:polygon(0 60%,100% 60%,100% 100%,0 100%);opacity:0.8}
+
+/* bagian typing */
+.tagline{
+  color:var(--text-muted);
+    font-size:0.85rem;
+  margin-top:8px;letter-spacing:0.05em;
+}
+.tagline-prefix{color:#fff;font-weight:bold}
+
+.cursor{
+    display:inline-block;
+  background-color:#fff;
+  width:8px;height:1em;
+    animation:blink 1s step-end infinite;
+  margin-left:3px;
+  vertical-align:middle;
+    box-shadow:0 0 5px rgba(255,255,255,0.3);
 }
 
-/* Deskripsi kecil di kartu link */
-.link-text span {
-    font-size: 0.8em;
-    color: #bbb; /* Warna abu-abu */
+
+/* ---------- LINK CARDS ---------- */
+
+.links{display:flex;flex-direction:column;gap:12px}
+
+.link-card{
+    display:flex;align-items:center;gap:15px;
+  padding:16px 20px;
+  background:var(--card-bg);
+    border:1px solid var(--card-border);
+  border-radius:12px;
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  text-decoration:none;color:var(--text-primary);
+  transition:all 0.3s ease;
+    position:relative;overflow:hidden;
 }
 
-/* Bagian untuk ikon sosial media */
-.socials {
-    display: flex;
-    justify-content: center; /* Menengahkan ikon-ikon secara horizontal */
-    gap: 20px; /* Jarak antar ikon */
+/* efek sweep waktu hover */
+.link-card::before{
+    content:'';position:absolute;top:0;left:-100%;
+  width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.03),transparent);
+    transition:left 0.5s ease;
+}
+.link-card:hover::before{left:100%}
+
+.link-card:hover{
+  border-color:rgba(255,255,255,0.3);
+    box-shadow:0 0 15px rgba(255,255,255,0.08),inset 0 0 15px rgba(255,255,255,0.02);
+  transform:translateX(5px);
 }
 
-/* Style untuk setiap link ikon sosial */
-.socials a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: rgba(35, 35, 35, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    text-decoration: none;
-    color: #fff;
-    font-size: 1.5em;
-    transition: transform 0.3s ease, background 0.3s ease;
+.card-icon{
+    width:44px;height:44px;border-radius:10px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.1);
+    display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;color:#bbb;
+  flex-shrink:0;
+    transition:all 0.3s ease;
+}
+.link-card:hover .card-icon{
+    background:rgba(255,255,255,0.08);
+  box-shadow:0 0 10px rgba(255,255,255,0.1);
 }
 
-/* Style untuk ikon di dalam link (tag <i> dari Font Awesome) */
-.socials a i {
-    transition: text-shadow 0.3s ease; /* Transisi untuk efek glowing */
-    /* Efek glowing untuk ikon */
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+/* warna per platform pas hover */
+.link-card:hover .fa-instagram{color:#E4405F;text-shadow:0 0 10px rgba(228,64,95,0.5)}
+.link-card:hover .fa-facebook-f{color:#1877F2;text-shadow:0 0 10px rgba(24,119,242,0.5)}
+.link-card:hover .fa-discord{color:#5865F2;text-shadow:0 0 10px rgba(88,101,242,0.5)}
+.link-card:hover .fa-github{color:#fff;text-shadow:0 0 10px rgba(255,255,255,0.5)}
+.link-card:hover .fa-youtube{color:#FF0000;text-shadow:0 0 10px rgba(255,0,0,0.5)}
+.link-card:hover .fa-spotify{color:#1DB954;text-shadow:0 0 10px rgba(29,185,84,0.5)}
+
+/* border card per platform */
+.link-card[aria-label="Instagram"]:hover{border-color:#E4405F;box-shadow:0 0 15px rgba(228,64,95,0.15)}
+.link-card[aria-label="Facebook"]:hover{border-color:#1877F2;box-shadow:0 0 15px rgba(24,119,242,0.15)}
+.link-card[aria-label="Discord"]:hover{border-color:#5865F2;box-shadow:0 0 15px rgba(88,101,242,0.15)}
+.link-card[aria-label="GitHub"]:hover{border-color:#fff;box-shadow:0 0 15px rgba(255,255,255,0.1)}
+.link-card[aria-label="YouTube"]:hover{border-color:#FF0000;box-shadow:0 0 15px rgba(255,0,0,0.15)}
+.link-card[aria-label="Spotify"]:hover{border-color:#1DB954;box-shadow:0 0 15px rgba(29,185,84,0.15)}
+
+/* icon container per platform */
+.link-card[aria-label="Instagram"]:hover .card-icon{background:rgba(228,64,95,0.1);border-color:rgba(228,64,95,0.3)}
+.link-card[aria-label="Facebook"]:hover .card-icon{background:rgba(24,119,242,0.1);border-color:rgba(24,119,242,0.3)}
+.link-card[aria-label="Discord"]:hover .card-icon{background:rgba(88,101,242,0.1);border-color:rgba(88,101,242,0.3)}
+.link-card[aria-label="GitHub"]:hover .card-icon{background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.3)}
+.link-card[aria-label="YouTube"]:hover .card-icon{background:rgba(255,0,0,0.1);border-color:rgba(255,0,0,0.3)}
+.link-card[aria-label="Spotify"]:hover .card-icon{background:rgba(29,185,84,0.1);border-color:rgba(29,185,84,0.3)}
+
+.card-info{flex:1;text-align:left}
+.card-info strong{
+    display:block;
+  font-family:var(--font-heading);
+  font-size:0.85rem;font-weight:700;
+    letter-spacing:0.05em;
+}
+.card-info span{font-size:0.75rem;color:var(--text-muted)}
+
+.card-arrow{
+  color:var(--text-muted);font-size:0.85rem;
+    transition:all 0.3s ease;
+  opacity:0;transform:translateX(-10px);
+}
+.link-card:hover .card-arrow{opacity:1;transform:translateX(0);color:#fff}
+
+
+/* ---------- FOOTER ---------- */
+
+.footer{padding:10px 0 20px}
+.footer-line{
+    width:60px;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.4),transparent);
+  margin:0 auto 15px;
+}
+.footer p{font-size:0.7rem;color:var(--text-muted);letter-spacing:0.1em}
+
+
+/* ---------- REVEAL ---------- */
+
+[data-reveal]{
+  opacity:0;transform:translateY(30px);
+    transition:opacity 0.8s ease,transform 0.8s ease;
+}
+[data-reveal].revealed{opacity:1;transform:translateY(0)}
+
+
+/* ---------- ANIMASI ---------- */
+
+@keyframes blink{
+    from,to{background-color:transparent}
+  50%{background-color:#fff}
+}
+@keyframes blink-text{
+  from,to{opacity:1}
+    50%{opacity:0}
+}
+@keyframes spin-ring{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+@keyframes pulse-neon{
+    0%{box-shadow:0 0 0 0 rgba(255,255,255,0.3)}
+  70%{box-shadow:0 0 15px 10px rgba(255,255,255,0)}
+    100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
 }
 
-/* Efek saat link sosial di-hover */
-.socials a:hover {
-    transform: scale(1.1); /* Sedikit membesar */
-    background: rgba(50, 50, 50, 0.7); /* Latar belakang sedikit lebih terang */
+@keyframes glitch-1{
+0%{transform:translate(0)}
+    20%{transform:translate(-2px,2px)}
+40%{transform:translate(-2px,-2px)}
+  60%{transform:translate(2px,2px)}
+    80%{transform:translate(2px,-2px)}
+100%{transform:translate(0)}
+}
+@keyframes glitch-2{
+  0%{transform:translate(0)}
+20%{transform:translate(2px,-2px)}
+    40%{transform:translate(2px,2px)}
+  60%{transform:translate(-2px,-2px)}
+80%{transform:translate(-2px,2px)}
+    100%{transform:translate(0)}
+}
+@keyframes glitch-skew{
+  0%{transform:skew(0deg)}
+    2%{transform:skew(0.5deg)}
+  4%{transform:skew(0deg)}
+20%{transform:skew(-0.3deg)}
+    22%{transform:skew(0deg)}
+  50%{transform:skew(0.2deg)}
+52%{transform:skew(0deg)}
+  80%{transform:skew(-0.5deg)}
+    82%{transform:skew(0deg)}
+100%{transform:skew(0deg)}
 }
 
-/* Menambahkan efek glow pada ikon saat di-hover */
-.socials a:hover i {
-    text-shadow: 0 0 16px rgba(255, 255, 255, 1);
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:600px){
+  .container{gap:20px;padding:10px}
+    .profile-img-wrapper{width:100px;height:100px}
+  .profile-img-wrapper img{width:100px;height:100px}
+  .profile-ring{width:110px;height:110px}
+    .glitch{font-size:2rem}
+  .splash-glitch{font-size:clamp(2rem,12vw,4rem)}
+  .link-card{padding:14px 16px}
+    .card-icon{width:38px;height:38px;font-size:1rem}
+  .card-info strong{font-size:0.8rem}
+    #volume-control{top:12px;left:12px;padding:6px 10px}
 }
 
-/* Aturan untuk layar yang lebih kecil dari 600px (Responsive Design) */
-@media (max-width: 600px) {
-    /* Mengubah grid link menjadi 1 kolom saja agar tidak sempit */
-    .links {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Style untuk kursor ketik yang berkedip */
-.cursor {
-    display: inline-block;
-    background-color: #ccc;
-    width: 8px;
-    height: 1em;
-    animation: blink 1s step-end infinite; /* Menggunakan animasi 'blink' */
-    margin-left: 4px;
-    vertical-align: middle;
-}
-
-/* Definisi animasi 'blink' */
-@keyframes blink {
-    from, to {
-        background-color: transparent; /* Awal dan akhir animasi, kursor transparan */
-    }
-    50% {
-        background-color: #ccc; /* Di tengah animasi, kursor muncul */
-    }
-}
-
-/* Style untuk kotak kontrol volume */
-#volume-control {
-    position: fixed;
-    top: 25px;
-    left: 25px;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    padding: 8px;
-    background: rgba(35, 35, 35, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
-
-/* Ikon di dalam kontrol volume */
-#volume-control i {
-    color: #fff;
-    cursor: pointer;
-    font-size: 18px;
-    width: 25px;
-}
-
-/* Slider volume, awalnya tersembunyi */
-#volume-slider {
-    width: 0;
-    opacity: 0;
-    margin-left: 0;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    -webkit-appearance: none; /* Menghilangkan style default browser */
-    appearance: none;
-    background: transparent;
-}
-
-/* Saat kotak kontrol volume di-hover, slider akan muncul */
-#volume-control:hover #volume-slider {
-    width: 80px; /* Lebar slider saat muncul */
-    opacity: 1; /* Slider menjadi terlihat */
-    margin-left: 10px; /* Jarak dari ikon speaker */
-}
-
-/* Style untuk jalur (track) slider di Chrome/Safari */
-#volume-slider::-webkit-slider-runnable-track {
-    width: 100%;
-    height: 4px;
-    background: #555;
-    border-radius: 2px;
-}
-
-/* Style untuk gagang (thumb) slider di Chrome/Safari */
-#volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    margin-top: -4px; /* Menyesuaikan posisi vertikal gagang */
-    width: 12px;
-    height: 12px;
-    background: #fff;
-    border-radius: 50%;
-}
-
-/* Splash screen yang menutupi seluruh halaman */
-#splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: #000;
-    z-index: 200; /* Paling atas di antara semua elemen */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.8s ease, visibility 0.8s ease;
-}
-
-/* Class 'hidden' untuk menyembunyikan splash screen dengan efek fade out */
-#splash-screen.hidden {
-    opacity: 0; /* Membuatnya transparan */
-    visibility: hidden; /* Menyembunyikannya dari pandangan dan interaksi */
-}
-
-/* Tombol 'Enter' di tengah splash screen */
-#enter-button {
-    background: transparent;
-    border: 1px solid #fff;
-    color: #fff;
-    padding: 12px 25px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1em;
-    cursor: pointer;
-    border-radius: 5px;
-    animation: pulse 2s infinite; /* Menggunakan animasi 'pulse' */
-}
-
-/* Definisi animasi 'pulse' untuk tombol */
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-    }
-    70% {
-        transform: scale(1.05); /* Sedikit membesar */
-        /* Bayangan menyebar dan menghilang untuk menciptakan efek denyut */
-        box-shadow: 0 0 10px 20px rgba(255, 255, 255, 0); 
-    }
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-    }
+@media(max-width:380px){
+    .glitch{font-size:1.6rem}
+  .tagline{font-size:0.75rem}
+  .card-info strong{font-size:0.75rem}
 }
