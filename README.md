@@ -1,2 +1,2 @@
 # RivalWu.github.io
-thanks gemini ai
+como estas
