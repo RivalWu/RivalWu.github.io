@@ -20,11 +20,7 @@
 </head>
 <body>
 
-    <!-- custom motion cursor -->
-    <div class="cyber-cursor"></div>
-    <div class="cyber-cursor-ring"></div>
-
-    <!-- HUD frame overlay -->
+    <!-- HUD Frame Overlay -->
     <div class="hud-frame">
         <div class="hud-corner top-left"></div>
         <div class="hud-corner top-right"></div>
@@ -33,16 +29,17 @@
         <div class="hud-status">SYS.MOTION // ONLINE</div>
     </div>
 
-    <!-- scanline overlay -->
+    <!-- Scanline Overlay -->
     <div class="scanlines"></div>
   
+    <!-- Interactive Canvas & Custom HUD Cursor -->
     <canvas id="cyber-canvas"></canvas>
     <div class="hud-cursor">
         <div class="hud-cursor-dot"></div>
         <div class="hud-cursor-ring"></div>
     </div>
 
-    <!-- splash -->
+    <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-content">
             <div class="splash-glitch" data-text="ENTER">ENTER</div>
@@ -55,7 +52,7 @@
         </div>
     </div>
 
-    <!-- volume + audio visualizer -->
+    <!-- Volume + Audio Visualizer -->
     <div id="volume-control">
         <i class="fa-solid fa-volume-high"></i>
         <div class="eq-bars" id="eq-bars">
@@ -64,23 +61,22 @@
         <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2">
     </div>
 
-    <!-- audio bg -->
+    <!-- Audio Background -->
     <audio id="background-music" loop preload="auto">
         <source src="background.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- video bg -->
+    <!-- Video Background -->
     <video autoplay loop muted playsinline class="background-video">
         <source src="background.mp4" type="video/mp4">
     </video>
 
-    <!-- animated grid & particles -->
+    <!-- Animated Grid Overlay -->
     <div class="grid-overlay"></div>
-    <canvas id="motion-canvas"></canvas>
 
     <div class="container">
 
-        <!-- profil -->
+        <!-- Profil -->
         <header class="profile" data-reveal>
             <div class="profile-img-wrapper">
                 <img src="assets/profile.png" alt="foto profil val">
@@ -95,7 +91,7 @@
             </p>
         </header>
 
-        <!-- links sosmed -->
+        <!-- Links Sosmed -->
         <main class="links">
 
             <a href="https://www.instagram.com/ripaldawg/" target="_blank" rel="noopener" class="link-card" aria-label="Instagram" data-reveal-card>
@@ -136,7 +132,7 @@
 
         </main>
 
-        <!-- footer -->
+        <!-- Footer -->
         <footer class="footer" data-reveal>
             <div class="footer-line"></div>
             <p>&copy; 2025 val // all systems operational</p>
