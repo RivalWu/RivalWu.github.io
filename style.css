@@ -407,3 +407,118 @@ body {
 
 /* border card per platform */
 .link-card
+
+#cyber-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Custom Cyber HUD Cursor */
+@media (pointer: fine) {
+  body, a, button, input { cursor: none !important; }
+}
+
+.hud-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.hud-cursor-dot {
+  width: 6px; height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px #fff;
+}
+
+.hud-cursor-ring {
+  width: 36px; height: 36px;
+  border: 1px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              height 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              background-color 0.25s ease;
+  animation: spin-ring 8s linear infinite;
+}
+
+.hud-cursor.hovering .hud-cursor-ring {
+  width: 56px; height: 56px;
+  border: 1.5px solid #fff;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* Dual Outer Ring pada Foto Profil */
+.profile-img-wrapper::before {
+  content: '';
+  position: absolute;
+  top: -12px; left: -12px;
+  width: 144px; height: 144px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.25);
+  animation: spin-ring 12s linear infinite reverse;
+  z-index: 1;
+}
+
+/* 3D Motion Card Upgrade */
+.links {
+  perspective: 1000px;
+}
+
+.link-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  opacity: 0;
+  transform: translateY(25px) rotateX(15deg);
+  transition: transform 0.15s ease-out, border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.6s ease;
+}
+
+.link-card.card-visible {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
+}
+
+.card-icon, .card-info, .card-arrow {
+  transform: translateZ(20px);
+}
+
+/* Dynamic Spotlight Glare di dalam Card */
+.link-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    250px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.12),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.link-card:hover::after {
+  opacity: 1;
+}
+
+/* Splash Screen Shutter Exit Motion */
+#splash-screen.hidden {
+  opacity: 0;
+  transform: scale(1.15);
+  filter: blur(15px);
+  visibility: hidden;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.7s ease,
+              visibility 0.7s;
+}
+
