@@ -1,124 +1,143 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>val // cyberdeck</title>
-<meta name="description" content="val's personal cyberdeck - links, socials, and vibes.">
-<meta property="og:title" content="val // cyberdeck">
+    <meta name="description" content="val's personal cyberdeck - links, socials, and vibes.">
+    <meta property="og:title" content="val // cyberdeck">
     <meta property="og:description" content="val's personal cyberdeck - links, socials, and vibes.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://rivalwu.github.io">
-<meta name="twitter:card" content="summary">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rivalwu.github.io">
+    <meta name="twitter:card" content="summary">
     <meta name="theme-color" content="#0a0a0a">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap">
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 
-<!-- scanline overlay -->
-<div class="scanlines"></div>
+    <!-- custom motion cursor -->
+    <div class="cyber-cursor"></div>
+    <div class="cyber-cursor-ring"></div>
+
+    <!-- HUD frame overlay -->
+    <div class="hud-frame">
+        <div class="hud-corner top-left"></div>
+        <div class="hud-corner top-right"></div>
+        <div class="hud-corner bottom-left"></div>
+        <div class="hud-corner bottom-right"></div>
+        <div class="hud-status">SYS.MOTION // ONLINE</div>
+    </div>
+
+    <!-- scanline overlay -->
+    <div class="scanlines"></div>
 
     <!-- splash -->
     <div id="splash-screen">
         <div class="splash-content">
-        <div class="splash-glitch" data-text="ENTER">ENTER</div>
+            <div class="splash-glitch" data-text="ENTER">ENTER</div>
             <button id="enter-button">
-            <span class="btn-bracket">[</span>
+                <span class="btn-bracket">[</span>
                 <span class="btn-text">CLICK TO INITIALIZE</span>
-            <span class="btn-bracket">]</span>
-        </button>
-        <div class="splash-sub">press to continue_</div>
+                <span class="btn-bracket">]</span>
+            </button>
+            <div class="splash-sub">press to continue_</div>
         </div>
     </div>
 
-<!-- volume -->
-<div id="volume-control">
-    <i class="fa-solid fa-volume-high"></i>
+    <!-- volume + audio visualizer -->
+    <div id="volume-control">
+        <i class="fa-solid fa-volume-high"></i>
+        <div class="eq-bars" id="eq-bars">
+            <span></span><span></span><span></span><span></span>
+        </div>
         <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2">
-</div>
+    </div>
 
     <!-- audio bg -->
     <audio id="background-music" loop preload="auto">
-    <source src="background.mp3" type="audio/mpeg">
+        <source src="background.mp3" type="audio/mpeg">
     </audio>
 
-<!-- video bg -->
+    <!-- video bg -->
     <video autoplay loop muted playsinline class="background-video">
         <source src="background.mp4" type="video/mp4">
-</video>
+    </video>
 
-<div class="grid-overlay"></div>
+    <!-- animated grid & particles -->
+    <div class="grid-overlay"></div>
+    <canvas id="motion-canvas"></canvas>
 
     <div class="container">
 
-    <!-- profil -->
+        <!-- profil -->
         <header class="profile" data-reveal>
-        <div class="profile-img-wrapper">
+            <div class="profile-img-wrapper">
                 <img src="assets/profile.png" alt="foto profil val">
-            <div class="profile-ring"></div>
+                <div class="profile-ring"></div>
+                <div class="profile-ring-outer"></div>
             </div>
             <h1 class="glitch" data-text="val">val</h1>
-        <p class="tagline">
-            <span class="tagline-prefix">&gt;_</span>
+            <p class="tagline">
+                <span class="tagline-prefix">&gt;_</span>
                 <span id="typing-text"></span>
-            <span class="cursor"></span>
+                <span class="cursor"></span>
             </p>
-    </header>
+        </header>
 
         <!-- links sosmed -->
-    <main class="links" data-reveal>
+        <main class="links">
 
-        <a href="https://www.instagram.com/ripaldawg/" target="_blank" rel="noopener" class="link-card" aria-label="Instagram">
+            <a href="https://www.instagram.com/ripaldawg/" target="_blank" rel="noopener" class="link-card" aria-label="Instagram" data-reveal-card>
                 <div class="card-icon"><i class="fa-brands fa-instagram"></i></div>
-            <div class="card-info"><strong>Instagram</strong><span>@ripaldawg</span></div>
+                <div class="card-info"><strong data-scramble="Instagram">Instagram</strong><span>@ripaldawg</span></div>
                 <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
-            <a href="https://www.facebook.com/rivalriz" target="_blank" rel="noopener" class="link-card" aria-label="Facebook">
-            <div class="card-icon"><i class="fa-brands fa-facebook-f"></i></div>
-                <div class="card-info"><strong>Facebook</strong><span>rivalriz</span></div>
-            <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-        </a>
-
-        <a href="https://discordapp.com/users/399186469832622080" target="_blank" rel="noopener" class="link-card" aria-label="Discord">
-            <div class="card-icon"><i class="fa-brands fa-discord"></i></div>
-            <div class="card-info"><strong>Discord</strong><span>val</span></div>
+            <a href="https://www.facebook.com/rivalriz" target="_blank" rel="noopener" class="link-card" aria-label="Facebook" data-reveal-card>
+                <div class="card-icon"><i class="fa-brands fa-facebook-f"></i></div>
+                <div class="card-info"><strong data-scramble="Facebook">Facebook</strong><span>rivalriz</span></div>
                 <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-        </a>
+            </a>
 
-            <a href="https://github.com/RivalWu" target="_blank" rel="noopener" class="link-card" aria-label="GitHub">
+            <a href="https://discordapp.com/users/399186469832622080" target="_blank" rel="noopener" class="link-card" aria-label="Discord" data-reveal-card>
+                <div class="card-icon"><i class="fa-brands fa-discord"></i></div>
+                <div class="card-info"><strong data-scramble="Discord">Discord</strong><span>val</span></div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
+
+            <a href="https://github.com/RivalWu" target="_blank" rel="noopener" class="link-card" aria-label="GitHub" data-reveal-card>
                 <div class="card-icon"><i class="fa-brands fa-github"></i></div>
-        <div class="card-info"><strong>GitHub</strong><span>RivalWu</span></div>
-            <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+                <div class="card-info"><strong data-scramble="GitHub">GitHub</strong><span>RivalWu</span></div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
-        <a href="https://www.youtube.com/@paldawg" target="_blank" rel="noopener" class="link-card" aria-label="YouTube">
-        <div class="card-icon"><i class="fa-brands fa-youtube"></i></div>
-                <div class="card-info"><strong>YouTube</strong><span>@paldawg</span></div>
-            <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-        </a>
+            <a href="https://www.youtube.com/@paldawg" target="_blank" rel="noopener" class="link-card" aria-label="YouTube" data-reveal-card>
+                <div class="card-icon"><i class="fa-brands fa-youtube"></i></div>
+                <div class="card-info"><strong data-scramble="YouTube">YouTube</strong><span>@paldawg</span></div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            </a>
 
-            <a href="https://open.spotify.com/user/31tgoi2qljvwwdo2gzz67hhkqbri?si=c2e20e8e2c70468d" target="_blank" rel="noopener" class="link-card" aria-label="Spotify">
-        <div class="card-icon"><i class="fa-brands fa-spotify"></i></div>
-            <div class="card-info"><strong>Spotify</strong><span>paldawg</span></div>
-        <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
+            <a href="https://open.spotify.com/user/31tgoi2qljvwwdo2gzz67hhkqbri?si=c2e20e8e2c70468d" target="_blank" rel="noopener" class="link-card" aria-label="Spotify" data-reveal-card>
+                <div class="card-icon"><i class="fa-brands fa-spotify"></i></div>
+                <div class="card-info"><strong data-scramble="Spotify">Spotify</strong><span>paldawg</span></div>
+                <div class="card-arrow"><i class="fa-solid fa-arrow-right"></i></div>
             </a>
 
         </main>
 
-    <!-- footer -->
-    <footer class="footer" data-reveal>
+        <!-- footer -->
+        <footer class="footer" data-reveal>
             <div class="footer-line"></div>
-        <p>&copy; 2025 val // all systems operational</p>
+            <p>&copy; 2025 val // all systems operational</p>
         </footer>
 
-</div>
+    </div>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
